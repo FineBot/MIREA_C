@@ -82,12 +82,21 @@ int BMSearch(string first, string second) { // алгоритм поиска Бойера-Мура-Хорсп
 }
 
 int main() {
-    cout << linearSearch("Lorem ipsum dolor sit amet, consectetur adipiscing "
-                         "elit, sed do eiusmod tempor incididunt "
-                         "ut labore et dolore magna aliqua.", "sit");
+    setlocale(LC_ALL, "rus");
+    string text="";
+    cin>>text;
+    string text2="";
+    cin>>text2;
+    double t = time(0);
+    cout << linearSearch(text, text2);
+    cout << endl<<"Время работы: "<<time(0)-t;
     cout << endl<<endl;
-    cout <<BMSearch("sit Lorem ipsum dolor sit amet, consectetur adipiscing "
-                    "elit, sed do eiusmod tempor incididunt "
-                    "ut labore et dolore magna aliqua.", "sit");
+
+    cin>>text;
+    cin>>text2;
+    t = time(0);
+    cout <<BMSearch(text, text2);
+    cout << endl<<"Время работы: "<<time(0)-t;
+
     return 0;
 }
