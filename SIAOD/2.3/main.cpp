@@ -48,34 +48,37 @@ int *shiftArray(string text) { // функци€ получени€ сдвигового массива
     return result;
 }
 
-int BMSearch(string first, string second) {
-    int *shift = shiftArray(second);
-    int startIndex=0;
-
-    while (startIndex + second.length() < first.length()) {
+int BMSearch(string first, string second) { // алгоритм поиска Ѕойера-ћура-’орспула
+    int *shift = shiftArray(second); // сдвиговый массив
+    int startIndex=0; // сдвиг
+    int lastIndex=-1;
+    while (startIndex + second.length() < first.length()) { // пока сдвиг + длина подстроки меньше длины строки
         bool find = true;
 
-        for (int i = second.length()-1; i >=0; i--) {
-            if (first[startIndex + i] != second[i]) {
+        for (int i = second.length()-1; i >=0; i--) { // сравниваем строки начина€ с конца подстроки
+            if (first[startIndex + i] != second[i]) { // если символы не совпадают
                 bool findShift=false;
-                for(int k = 0;k<second.length();k++){
+                for(int k = 0;k<second.length();k++){ // ищем на сколько необходимо сместить
                     if(second[k]==first[startIndex+i]){
-                        startIndex+=shift[k];
+                        startIndex+=shift[k]; // смещаем
                         findShift=true;
                         break;
                     }
                 }
-                if(!findShift)
+                if(!findShift) // если не нашли букву в подстроке, то смещаем на длину всей подстроки
                     startIndex+=second.length();
 
                 find = false;
                 break;
             }
         }
-        if (find)
-            return startIndex;
+        if (find){ // если нашли, то сохран€ем последний найденный индекс
+            lastIndex= startIndex;
+            startIndex++;
+        }
+
     }
-    return -1;
+    return lastIndex;
 }
 
 int main() {
@@ -83,7 +86,7 @@ int main() {
                          "elit, sed do eiusmod tempor incididunt "
                          "ut labore et dolore magna aliqua.", "sit");
     cout << endl<<endl;
-    cout <<BMSearch("Lorem ipsum dolor sit amet, consectetur adipiscing "
+    cout <<BMSearch("sit Lorem ipsum dolor sit amet, consectetur adipiscing "
                     "elit, sed do eiusmod tempor incididunt "
                     "ut labore et dolore magna aliqua.", "sit");
     return 0;
