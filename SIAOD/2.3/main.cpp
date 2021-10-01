@@ -2,49 +2,44 @@
 
 using namespace std;
 
+
 int linearSearch(string first, string second) {
     int startIndex = 0; // переменная сдвига
-    while (startIndex + second.length() < first.length()) { // пока сдвиг + длина подстроки меньше длины самой строки
-        bool find = true; // нашли ли мы слово
-
-        for (int i = 0; i < second.length(); i++) { // проходимся по подстроке
-            if (first[startIndex + i] != second[i]) { // сравниваем симолы подстроки и строки с учетом сдвига
-                startIndex++; // если символы не равны -- увеличиваем сдвиг
-                find = false; // соответственно подстрока не найдена
-                break;
-            }
+    while (startIndex + second.length() <= first.length()) { // пока сдвиг + длина подстроки меньше длины самой строки
+        int i =0;
+        while(first[startIndex + i] == second[i] && i<second.length()-1){ // проходимся по строке и сравниваем символы
+            i++;
         }
-        if (find)
+        if (first[startIndex + i] != second[i]) { // сравниваем симолы подстроки и строки с учетом сдвига
+            startIndex++; // если символы не равны -- увеличиваем сдвиг
+        }else
             return startIndex; // если найдена, возвращаем индекс первого вхождения;
     }
     return -1;
 }
-
 
 int *shiftArray(string text) { // функция получения сдвигового массива
     int *result = new int[text.length()]; // наш массив
 
     for (int i = text.length() - 2; i >= 0; i--) { // проходимся по слову с конца
         result[i] = text.length() - i - 1; // устанавливаем номер символа от правого края
-
         int lastEl = -1;
         for (int j = i + 1; j < text.length() - 1; j++) { // если символ раньше встречался,
-            if (text[i] == text[j]) // если встречался, то ставим соответсвующее значение сдвига
+            if (text[i] == text[j]) // если встречался, то ставим соответствующее значение сдвига
                 lastEl = result[j];
         }
         if (lastEl >= 1)
             result[i] = lastEl;
     }
-    bool set = false;
-    for (int i = 0; i < text.length() - 2; i++) { // ищем, встречался ли первый с конца символ в слове
-        if (text[i] == text[text.length() - 1]) { // если да, ставим соответствующий сдвиг
-            result[text.length() - 1] = result[i];
-            set = true;
-            break;
-        }
+    int i =0;
+    while(i<text.length()-2 && text[i] != text[text.length() - 1]){ // проверяем, есть ли символ в нашей подстроке
+        i++;
     }
-    if (!set) // если не встречался, то ставим длину слова
+    if (text[i] == text[text.length() - 1]) { // если есть, ставим соответствующий сдвиг
+        result[text.length() - 1] = result[i];
+    }else // если не встречался, то ставим длину слова
         result[text.length() - 1] = text.length();
+
     return result;
 }
 
@@ -52,27 +47,22 @@ int BMSearch(string first, string second) { // алгоритм поиска Бойера-Мура-Хорсп
     int *shift = shiftArray(second); // сдвиговый массив
     int startIndex=0; // сдвиг
     int lastIndex=-1;
-    while (startIndex + second.length() < first.length()) { // пока сдвиг + длина подстроки меньше длины строки
-        bool find = true;
-
-        for (int i = second.length()-1; i >=0; i--) { // сравниваем строки начиная с конца подстроки
-            if (first[startIndex + i] != second[i]) { // если символы не совпадают
-                bool findShift=false;
-                for(int k = 0;k<second.length();k++){ // ищем на сколько необходимо сместить
-                    if(second[k]==first[startIndex+i]){
-                        startIndex+=shift[k]; // смещаем
-                        findShift=true;
-                        break;
-                    }
-                }
-                if(!findShift) // если не нашли букву в подстроке, то смещаем на длину всей подстроки
-                    startIndex+=second.length();
-
-                find = false;
-                break;
-            }
+    while (startIndex + second.length() <= first.length()) { // пока сдвиг + длина подстроки меньше длины строки
+        int i =second.length()-1;
+        while(i >0 && first[startIndex + i] == second[i]){ // сравниваем строки начиная с конца подстроки
+            i--;
         }
-        if (find){ // если нашли, то сохраняем последний найденный индекс
+        if (first[startIndex + i] != second[i]) { // если символы не совпадают
+            int k =0;
+            while(k<second.length()-1 && second[k]!=first[startIndex+i]){ // ищем на сколько необходимо сместить
+                k++;
+            }
+            if(second[k]==first[startIndex+i]){
+                startIndex+=shift[k]; // смещаем
+            } else // если не нашли букву в подстроке, то смещаем на длину всей подстроки
+                startIndex+=second.length();
+
+        }else{ // если нашли, то сохраняем последний найденный индекс
             lastIndex= startIndex;
             startIndex++;
         }
@@ -83,6 +73,7 @@ int BMSearch(string first, string second) { // алгоритм поиска Бойера-Мура-Хорсп
 
 int main() {
     setlocale(LC_ALL, "rus");
+
     string text="";
     cin>>text;
     string text2="";
