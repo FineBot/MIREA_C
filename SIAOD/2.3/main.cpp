@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 int linearSearch(string first, string second) {
     int startIndex = 0; // переменная сдвига
     while (startIndex + second.length() <= first.length()) { // пока сдвиг + длина подстроки меньше длины самой строки
