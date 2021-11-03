@@ -18,8 +18,8 @@ int main(){
         tr.add(cId, cParentId,cWeight);
     }
 
-
     tr.echo(tr.root,0);
-
+    cout<<endl;
+    tr.findWay("/"+std::to_string(tr.root->id),0,tr.root,6);
     return 0;
 }
