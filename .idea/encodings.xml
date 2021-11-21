@@ -8,5 +8,10 @@
     <file url="file://$PROJECT_DIR$/SIAOD/2.4/main.cpp" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/SIAOD/2.5/main.cpp" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/SIAOD/2.5/tree.cpp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/SIAOD/2.6/Huffman.cpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SIAOD/2.6/Shennon.cpp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/SIAOD/2.6/main.cpp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SIAOD/2.6/test" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/SIAOD/2.6/toLowerRussianSymbol.cpp" charset="windows-1251" />
   </component>
 </project>
