@@ -7,12 +7,14 @@ using namespace std;
 
 class Shennon {
 public:
+    // структура для хранения символа
     struct item {
         char ch = NULL;
         int count = -1;
         string code = "";
     };
 
+// функция поска в векторе по символу
     int findInVector(vector<item> v, char target) {
         for (int i = 0; i < v.size(); i++) {
             if (v.at(i).ch == target) {
@@ -22,6 +24,7 @@ public:
         return -1;
     }
 
+// функция поиска в векторе по коду
     int findInVectorByCode(vector<item> v, string target) {
         for (int i = 0; i < v.size(); i++) {
             if (v.at(i).code == target) {
@@ -31,11 +34,10 @@ public:
         return -1;
     }
 
-
+// функция разделения вектора на две разные группы по сумме
     int setMinDifferent(item *arrayData, int startIndex, int endIndex) {
         int delIndex = startIndex;
         int minAbs = -1;
-//        cout << endIndex<<" ";
         int lastDelIndex = -1;
         while (delIndex < endIndex) {
             int sumA = 0;
@@ -54,7 +56,7 @@ public:
         }
         return lastDelIndex;
     }
-
+// функция быстрой сортировки
     void qsortRecursive(item *mas, int size) {
         int i = 0;
         int j = size - 1;
@@ -83,10 +85,7 @@ public:
         }
     }
 
-    Shennon() {
-
-    }
-
+//    функция декодирования файла
     void decodeFile(string pathToFile) {
         string data;
         string params;
@@ -99,7 +98,7 @@ public:
         string buffCode = "";
         for (int i = 0; i < params.length(); i++) {
 
-            if (buffCode == "" && params[i+1]==':') {
+            if (buffCode == "" && params[i + 1] == ':') {
                 item t;
                 t.ch = params[i];
                 items.push_back(t);
@@ -114,22 +113,22 @@ public:
         }
 
         buffCode = "";
-        string decodedData="";
+        string decodedData = "";
 
         for (int i = 0; i < data.length(); i++) {
             buffCode += data[i];
             int j = findInVectorByCode(items, buffCode);
             if (j != -1) {
-                buffCode="";
-                decodedData+=items.at(j).ch;
+                buffCode = "";
+                decodedData += items.at(j).ch;
             }
         }
 
         ofstream of(pathToFile);
-        of<<decodedData;
+        of << decodedData;
         of.close();
     }
-
+// функция кодирования файла
     void encodeFile(string pathToFile) {
 
         string data;
@@ -138,7 +137,7 @@ public:
         fin.close();
         vector<item> items;
         for (int i = 0; i < data.length(); i++) {
-            int findIndex = findInVector(items, tolower(data[i]));
+            int findIndex = findInVector(items, (data[i]));
             if (findIndex != -1) {
                 items.at(findIndex).count++;
             } else {
@@ -174,6 +173,9 @@ public:
         of.close();
     }
 
+    Shennon(){}
+
+// в конструкторе кодируем строку
     Shennon(string
             data) {
         vector<item> items;
@@ -210,6 +212,7 @@ public:
 
     }
 
+    // функция установки кодов
     void setCodes(vector<item> *items, item *array, int startIndex, int endIndex) {
         int del = setMinDifferent(array, startIndex, endIndex);
         if (endIndex - del > 1) {
